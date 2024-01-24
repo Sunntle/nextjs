@@ -1,0 +1,17 @@
+{
+  "common": {
+    "welcome": "Xin chao"
+  },
+  "navbar": {
+    "markets": "Thị trường",
+    "discover": "Khám phá",
+    "notifications": "Thông báo",
+    "knowledge": "Kiến thức",
+    "research": "Nghiên cứu",
+    "products": "Sản phẩm",
+    "supports": "Hỗ trợ",
+    "about": "Về chúng tôi",
+    "event": "Sự kiện"
+  },
+  "languageSwitcher": "Chuyen tu <1>{{lng}}</1> to: "
+}

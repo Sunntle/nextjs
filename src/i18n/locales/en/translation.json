@@ -1,0 +1,17 @@
+{
+  "common": {
+    "welcome": "Hi"
+  },
+  "navbar": {
+    "markets": "Markets",
+    "discover": "Discover",
+    "notifications": "Notifications",
+    "knowledge": "Knowledge",
+    "research": "Research",
+    "products": "Products",
+    "supports": "Supports",
+    "about": "About Us",
+    "event": "Event"
+  },
+  "languageSwitcher": "Switch from <1>{{lng}}</1> to: "
+}
