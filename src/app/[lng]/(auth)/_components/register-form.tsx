@@ -1,3 +1,4 @@
+"use client";
 import CardWrapper from "./card-wrapper";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -19,13 +20,19 @@ import FormSuccess from "./from-success";
 import { useState, useTransition } from "react";
 import { IResponseError } from "@/actions/login";
 import { registerAction } from "@/actions/register";
+import { useAppState } from "@/contexts/AppContext";
+import { useTranslation } from "@/i18n/client";
+import { errorCode } from "@/utils/error-code";
 
 const RegisterForm = () => {
   const [isPending, startTransition] = useTransition();
   const [isSuccess, setSuccess] = useState<IResponseError>({
     message: "",
     status: "",
+    code: 0
   });
+  const { language } = useAppState();
+  const { t } = useTranslation(language);
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
@@ -43,9 +50,10 @@ const RegisterForm = () => {
   };
   return (
     <CardWrapper
-      headerLabel="Register Form"
-      backButton={{ label: "Already have an account?", href: "/login" }}
+      headerLabel={t("auth.registerform")}
+      backButton={{ label: t("auth.haccount"), href: "/login" }}
       showSocial
+      title={t("auth.auth")}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -54,13 +62,11 @@ const RegisterForm = () => {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Name</FormLabel>
+                <FormLabel>{t("auth.name")}</FormLabel>
                 <FormControl>
                   <Input disabled={isPending} placeholder="Name" {...field} />
                 </FormControl>
-                <FormDescription>
-                  This is your public display name.
-                </FormDescription>
+                <FormDescription>{t("auth.publicName")}</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -74,7 +80,7 @@ const RegisterForm = () => {
                 <FormControl>
                   <Input
                     disabled={isPending}
-                    placeholder="Username"
+                    placeholder="example@example.com"
                     {...field}
                   />
                 </FormControl>
@@ -87,12 +93,12 @@ const RegisterForm = () => {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel>{t("auth.password")}</FormLabel>
                 <FormControl>
                   <Input
                     disabled={isPending}
                     type="password"
-                    placeholder="Password"
+                    placeholder={t("auth.password")}
                     {...field}
                   />
                 </FormControl>
@@ -100,14 +106,18 @@ const RegisterForm = () => {
               </FormItem>
             )}
           />
-          {isSuccess.status == "ok" && (
-            <FormSuccess message={isSuccess.message} />
-          )}
-          {isSuccess.status == "error" && (
-            <FormError message={isSuccess.message} />
-          )}
+          <FormSuccess
+            message={
+              isSuccess?.status === "ok" ? t(`error.${errorCode(isSuccess.code)}`) : ""
+            }
+          />
+          <FormError
+            message={
+              isSuccess?.status === "error" ? t(`error.${errorCode(isSuccess.code)}`) : ""
+            }
+          />
           <Button type="submit" className="w-full" disabled={isPending}>
-            {isPending ? "Loading" : "Create an account"}
+            {isPending ? t("loading") : t("auth.createaccount")}
           </Button>
         </form>
       </Form>

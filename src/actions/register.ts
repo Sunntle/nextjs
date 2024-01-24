@@ -14,13 +14,13 @@ const registerAction = async (
   try {
     const vaildatedFields = RegisterSchema.safeParse(values);
     if (!vaildatedFields.success) {
-      return { message: "Invalid fields", status: "error" };
+      return {code: 101, status: "error" };
     }
     const { password, name, username } = vaildatedFields.data;
     const hashedPassword = await bcrypt.hash(password, 10);
     const isExistUser = await getUserByEmail(username);
     if (isExistUser)
-      return { message: "Email already in use", status: "error" };
+      return {code: 110, status: "error" };
     await db.user.create({
       data: {
         email: username,
@@ -31,10 +31,10 @@ const registerAction = async (
     const dataToken = await generateVerifyToken(username, "email-verify");
     if (!dataToken) throw new Error("Something wrong with generate verify token")
     await sendVerificationEmail(dataToken.email, dataToken.token); 
-    return { message: "Confirmation email sent!", status: "ok" };
+    return { code: 201, status: "ok" };
   } catch (err) {
     console.log(err);
-    return { message: "Something went wrong", status: "error" };
+    return { code: 0, status: "error" };
   }
 };
 export { registerAction };

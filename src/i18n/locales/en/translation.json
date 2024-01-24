@@ -1,6 +1,7 @@
 {
   "common": {
-    "welcome": "Hi"
+    "welcome": "Hi",
+    "loading": "Loading..."
   },
   "navbar": {
     "markets": "Markets",
@@ -12,6 +13,53 @@
     "supports": "Supports",
     "about": "About Us",
     "event": "Event"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "sigin": "Sign in",
+    "signup": "Sign up",
+    "loginform": "Login Form",
+    "registerform": "Register Form",
+    "name": "name",
+    "publicName": "This is your public display name.",
+    "password": "Password",
+    "forgotpw": "Forgot your password?",
+    "dhaccount": "Don't have an account?",
+    "haccount": "Already have an account?",
+    "createaccount": "Create an account",
+    "invalidCredentials": "Invalid credentials!",
+    "2facode": "Two factor code",
+    "2famailsent": "Email two-factor code sent!",
+    "emailUsed": "Email đã được sử dụng với nhà cung cấp khác!",
+    "confirm": "Confirm",
+    "auth": "Auth",
+    "resend": "Resend",
+    "newpassword": "New password",
+    "backtologin": "Back to login",
+    "send": "Send"
+  },
+  "error": {
+    "invalid-field": "Invalid fields",
+    "invalid-email": "Email doesn't exist!",
+    "invalid-code": "Invalid code!",
+    "code-expired": "Code expired!",
+    "error-2fa": "Something went wrong with 2FA!",
+    "invalid-credentials": "Invalid credentials!",
+    "invalid-accounts": "Invalid accounts!",
+    "no-link-account": "Account isn't linked!",
+    "email-used": "Email already in use",
+    "invalid-password": "Invalid password",
+    "error-token": "Token doesn't exist!",
+    "error-email": "Email not found",
+    "missing-token": "Missing token",
+    "confirm-email": "Confirmation email sent!",
+    "login-success": "Login successfully",
+    "resetpw-success": "Reset email sent!",
+    "email-verified": "Email verified!",
+    "check-email": "Please check your email to get a code!",
+    "rspw-sent": "Reset email sent!",
+    "error": "Something went wrong"
   },
   "languageSwitcher": "Switch from <1>{{lng}}</1> to: "
 }

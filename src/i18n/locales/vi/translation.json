@@ -1,6 +1,7 @@
 {
   "common": {
-    "welcome": "Xin chao"
+    "welcome": "Xin chào",
+    "loading": "Đang tải..."
   },
   "navbar": {
     "markets": "Thị trường",
@@ -8,10 +9,57 @@
     "notifications": "Thông báo",
     "knowledge": "Kiến thức",
     "research": "Nghiên cứu",
-    "products": "Sản phẩm",
+    "products": "Các sản phẩm",
     "supports": "Hỗ trợ",
     "about": "Về chúng tôi",
     "event": "Sự kiện"
   },
-  "languageSwitcher": "Chuyen tu <1>{{lng}}</1> to: "
+  "auth": {
+    "login": "Đăng nhập",
+    "register": "Đăng ký",
+    "sigin": "Đăng nhập",
+    "signup": "Đăng ký",
+    "loginform": "Mẫu đăng nhập",
+    "registerform": "Mẫu đăng ký",
+    "name": "Tên",
+    "publicName": "Đây là tên hiển thị công khai của bạn.",
+    "password": "Mật khẩu",
+    "forgotpw": "Quên mật khẩu?",
+    "dhaccount": "Bạn chưa có tài khoản?",
+    "haccount": "Bạn đã có tài khoản?",
+    "createaccount": "Tạo một tài khoản",
+    "invalidCredentials": "Thông tin không hợp lệ!",
+    "2facode": "Mã hai yếu tố",
+    "2famailsent": "Email mã hai yếu tố đã được gửi!",
+    "emailUsed": "Email đã được sử dụng với nhà cung cấp khác!",
+    "confirm": "Xác nhận",
+    "auth": "Xác thực",
+    "resend": "Gửi lại",
+    "newpassword": "Mật khẩu mới",
+    "backtologin": "Trở về trang đăng nhập",
+    "send": "Gửi"
+  },
+  "error": {
+    "invalid-field": "Các trường không hợp lệ",
+    "invalid-email": "Email không tồn tại!",
+    "invalid-code": "Mã không hợp lệ!",
+    "code-expired": "Mã đã hết hạn!",
+    "error-2fa": "Đã xảy ra lỗi với 2FA!",
+    "invalid-credentials": "Thông tin không hợp lệ!",
+    "invalid-accounts": "Tài khoản không hợp lệ!",
+    "no-link-account": "Tài khoản không được liên kết!",
+    "email-used": "Email đã được sử dụng",
+    "invalid-password": "Mật khẩu không hợp lệ",
+    "error-token": "Mã thông báo không tồn tại!",
+    "error-email": "Không tìm thấy email",
+    "missing-token": "Không tìm thấy token",
+    "confirm-email": "Email xác nhận đã được gửi!",
+    "login-success": "đăng nhập thành công",
+    "resetpw-success": "Đặt lại email đã gửi!",
+    "email-verified": "Email đã kích hoạt!",
+    "check-email": "Vui lòng kiểm tra email của bạn để nhận mã!",
+    "rspw-sent": "Email đặt lại mật khẩu đã được gửi!",
+    "error": "Đã xảy ra lỗi"
+  },
+  "languageSwitcher": "Chuyển từ <1>{{lng}}</1> ĐẾN: "
 }

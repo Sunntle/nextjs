@@ -8,12 +8,12 @@ const verifyEmail = async (token: string): Promise<IResponseError> => {
   try {
     const existingToken = await verificaitionTokenByToken(token, "email-verify");
     if (!existingToken)
-      return { status: "error", message: "Token doesn't exist!" };
+      return { status: "error", code: 112 };
     const isExpired = new Date(existingToken.expires) < new Date();
-    if (isExpired) return { status: "error", message: "Token has expired!" };
+    if (isExpired) return { status: "error", code: 105 };
     const existingUser = await getUserByEmail(existingToken.email);
     if (!existingUser)
-      return { status: "error", message: "Email doesn't exist!" };
+      return { status: "error", code: 102 };
     await Promise.all([
       db.user.update({
         where: { id: existingUser.id },
@@ -23,10 +23,10 @@ const verifyEmail = async (token: string): Promise<IResponseError> => {
         where: { id: existingToken.id },
       }),
     ]);
-    return { status: "ok", message: "Email verified!" };
+    return { status: "ok", code: 204 };
   } catch (err) {
     console.log("error verify email: ", err);
-    return { status: "error", message: "Something went wrong" };
+    return { status: "error", code: 0};
   }
 };
 

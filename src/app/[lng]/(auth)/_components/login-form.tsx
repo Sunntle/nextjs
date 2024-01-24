@@ -1,3 +1,4 @@
+'use client'
 import CardWrapper from "./card-wrapper";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -21,17 +22,23 @@ import { useState, useTransition } from "react";
 import { IResponseError, loginAction } from "@/actions/login";
 import { BeatLoader } from "react-spinners";
 import Link from "next/link";
+import { useTranslation } from "@/i18n/client";
+import { useAppState } from "@/contexts/AppContext";
+import { errorCode } from "@/utils/error-code";
 
 const LoginForm = () => {
   const [isPending, startTransition] = useTransition();
   const [isSuccess, setSuccess] = useState<IResponseError>({
     message: "",
+    code: 0,
     status: ""
   });
+  const {language} = useAppState()
+  const {t} = useTranslation(language)
   const searchParams = useSearchParams();
   const errorText =
     searchParams.get("error") === "OAuthAccountNotLinked"
-      ? "Email already in use with different provider"
+      ? t("auth.emailUsed")
       : "";
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -54,9 +61,10 @@ const LoginForm = () => {
 
   return (
     <CardWrapper
-      headerLabel="Login Form"
-      backButton={{ label: "Don't have an account?", href: "/register" }}
+      headerLabel={t("auth.loginform")}
+      backButton={{ label: t("auth.dhaccount"), href: "/register" }}
       showSocial
+      title={t("auth.auth")}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -67,7 +75,7 @@ const LoginForm = () => {
               name="code"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Two factor code</FormLabel>
+                  <FormLabel>{t("auth.2facode")}</FormLabel>
                   <FormControl>
                     <Input
                       disabled={isPending}
@@ -77,9 +85,9 @@ const LoginForm = () => {
                   </FormControl>
                   <FormMessage />
                   <FormDescription className="text-sm">
-                    Email two-factor code sent!{" "}
+                  {t("auth.2famailsent")}
                     <Button variant="link" size="sm" onClick={() => {}}>
-                      Resend
+                    {t("auth.resend")}
                     </Button>
                   </FormDescription>
                 </FormItem>
@@ -96,12 +104,12 @@ const LoginForm = () => {
                     <FormControl>
                       <Input
                         disabled={isPending}
-                        placeholder="Username"
+                        placeholder="example@ex.com"
                         {...field}
                       />
                     </FormControl>
                     <FormDescription>
-                      This is your public display name.
+                     {t("auth.publicName")}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -112,18 +120,18 @@ const LoginForm = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>{t("auth.password")}</FormLabel>
                     <FormControl>
                       <Input
                         disabled={isPending}
                         type="password"
-                        placeholder="Password"
+                        placeholder={t("auth.password")}
                         {...field}
                       />
                     </FormControl>
                     <FormMessage />
                     <Button asChild variant="link" size="sm" className="p-0">
-                      <Link href="/reset">Forgot your password?</Link>
+                      <Link href="/reset">{t("auth.forgotpw")}</Link>
                     </Button>
                   </FormItem>
                 )}
@@ -131,12 +139,12 @@ const LoginForm = () => {
             </>
           )}
           <FormSuccess
-            message={isSuccess?.status === "ok" ? isSuccess.message : ""}
+            message={isSuccess?.status === "ok" ? t(`error.${errorCode(isSuccess.code)}`) : ""}
           />
           <FormError
             message={
               (isSuccess?.status === "error" || isSuccess?.status === "error2fa"
-                ? isSuccess.message
+                ? t(`error.${errorCode(isSuccess.code)}`)
                 : "") || errorText
             }
           />
@@ -144,9 +152,9 @@ const LoginForm = () => {
             {isPending ? (
               <BeatLoader />
             ) : isSuccess.status === "pending" ? (
-              "Confirm"
+              t("auth.confirm")
             ) : (
-              "Login"
+              t("auth.login")
             )}
           </Button>
         </form>

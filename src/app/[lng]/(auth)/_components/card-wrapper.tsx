@@ -18,12 +18,13 @@ interface CardWrapperProps {
         href: string
     },
     showSocial?: boolean
+    title?: string
 }
-const CardWrapper = ({children, headerLabel, backButton, showSocial}: CardWrapperProps) => {
+const CardWrapper = ({children, headerLabel, backButton, showSocial, title}: CardWrapperProps) => {
   return (
     <Card className="w-[400px]">
       <CardHeader className="text-center">
-        <CardTitle>Auth</CardTitle>
+        <CardTitle>{title ?? "Auth"}</CardTitle>
         <CardDescription>{headerLabel}</CardDescription>
       </CardHeader>
       <CardContent>

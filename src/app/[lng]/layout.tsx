@@ -8,6 +8,7 @@ import { languages } from '@/i18n/setting'
 import { Footer } from "@/components/ui/footer/page";
 import { useTranslation } from "@/i18n";
 import Navbar from "@/components/ui/navbar/page";
+import AppProvider from "@/contexts/AppContext";
 
 export async function generateStaticParams() {
   return languages.map((lng) => ({ lng }))
@@ -33,11 +34,13 @@ export default async function RootLayout({
   return (
     <SessionProvider session={session}>
       <html lang={lng} dir={dir(lng)}>
+      <AppProvider language={lng}>
         <body className={inter.className} suppressHydrationWarning={true}>
           <Navbar lng={lng}/>
           {children}
           <Footer lng={lng}/>
         </body>
+        </AppProvider>
       </html>
     </SessionProvider>
   );

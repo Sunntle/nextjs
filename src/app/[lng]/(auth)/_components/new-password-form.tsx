@@ -1,3 +1,4 @@
+"use client"
 import CardWrapper from "./card-wrapper";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -21,12 +22,17 @@ import { useState, useTransition } from "react";
 import { IResponseError } from "@/actions/login";
 import { BeatLoader } from "react-spinners";
 import { newPassword, resetPassword } from "@/actions/reset";
+import { useAppState } from "@/contexts/AppContext";
+import { useTranslation } from "@/i18n/client";
+import { errorCode } from "@/utils/error-code";
 
 const NewPasswordForm = () => {
   const [isPending, startTransition] = useTransition()
-  const [isSuccess, setSuccess] = useState<IResponseError>({message: "", status: ""})
+  const [isSuccess, setSuccess] = useState<IResponseError>({message: "", status: "", code: 0})
   const searchParams = useSearchParams()
   const token = searchParams.get("token");
+  const {language} = useAppState()
+  const {t} = useTranslation(language)
   const form = useForm<z.infer<typeof NewPasswordSchema>>({
     resolver: zodResolver(NewPasswordSchema),
     defaultValues: {
@@ -35,7 +41,7 @@ const NewPasswordForm = () => {
   });
   const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
     if(!token) {
-        setSuccess({status: "error", message: "Missing token"})
+        setSuccess({status: "error", code: 114})
         return
     }
     startTransition(()=>{
@@ -46,8 +52,8 @@ const NewPasswordForm = () => {
   };
   return (
     <CardWrapper
-      headerLabel="New password"
-      backButton={{ label: "Back to login?", href: "/login" }}
+      headerLabel={t("auth.newpassword")}
+      backButton={{ label: t("auth.backtologin"), href: "/login" }}
       showSocial={false}
     >
       <Form {...form}>
@@ -57,7 +63,7 @@ const NewPasswordForm = () => {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>New password</FormLabel>
+                <FormLabel>{t("auth.newpassword")}</FormLabel>
                 <FormControl>
                   <Input disabled={isPending} type="password" placeholder="********" {...field} />
                 </FormControl>
@@ -65,8 +71,8 @@ const NewPasswordForm = () => {
               </FormItem>
             )}
           />
-          <FormSuccess message={isSuccess?.status === "ok" ? isSuccess.message : ""}/>
-          <FormError message={isSuccess?.status === "error" ? isSuccess.message : ""}/>
+          <FormSuccess message={isSuccess?.status === "ok" ? t(`error.${errorCode(isSuccess.code)}`) : ""}/>
+          <FormError message={isSuccess?.status === "error" ? t(`error.${errorCode(isSuccess.code)}`) : ""}/>
           <Button type="submit" className="w-full" disabled={isPending}>{isPending ? <BeatLoader/> :"Reset password"}</Button>
         </form>
       </Form>

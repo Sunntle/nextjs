@@ -21,16 +21,21 @@ import { useState, useTransition } from "react";
 import { IResponseError } from "@/actions/login";
 import { BeatLoader } from "react-spinners";
 import { resetPassword } from "@/actions/reset";
+import { useAppState } from "@/contexts/AppContext";
+import { useTranslation } from "@/i18n/client";
+import { errorCode } from "@/utils/error-code";
 
 const ResetForm = () => {
   const [isPending, startTransition] = useTransition()
-  const [isSuccess, setSuccess] = useState<IResponseError>({message: "", status: ""})
+  const [isSuccess, setSuccess] = useState<IResponseError>({message: "", status: "", code: 0})
   const form = useForm<z.infer<typeof ForgotPasswordSchema>>({
     resolver: zodResolver(ForgotPasswordSchema),
     defaultValues: {
       username: "",
     },
   });
+  const {language} = useAppState()
+  const {t} = useTranslation(language)
   const onSubmit = (values: z.infer<typeof ForgotPasswordSchema>) => {
     startTransition(()=>{
         resetPassword(values).then((data: IResponseError)=> {
@@ -40,8 +45,8 @@ const ResetForm = () => {
   };
   return (
     <CardWrapper
-      headerLabel="Reset Password"
-      backButton={{ label: "Back to login?", href: "/login" }}
+      headerLabel={t("auth.newpassword")}
+      backButton={{ label: t("auth.backtologin"), href: "/login" }}
       showSocial={false}
     >
       <Form {...form}>
@@ -55,16 +60,13 @@ const ResetForm = () => {
                 <FormControl>
                   <Input disabled={isPending} placeholder="example@ex.com" {...field} />
                 </FormControl>
-                <FormDescription>
-                  This is your public display name.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <FormSuccess message={isSuccess?.status === "ok" ? isSuccess.message : ""}/>
-          <FormError message={(isSuccess?.status === "error" ? isSuccess.message : "")}/>
-          <Button type="submit" className="w-full" disabled={isPending}>{isPending ? <BeatLoader/> :"Send"}</Button>
+          <FormSuccess message={isSuccess?.status === "ok" ? t(`error.${errorCode(isSuccess.code)}`) : ""}/>
+          <FormError message={(isSuccess?.status === "error" ? t(`error.${errorCode(isSuccess.code)}`) : "")}/>
+          <Button type="submit" className="w-full" disabled={isPending}>{isPending ? <BeatLoader/> : t("auth.send")}</Button>
         </form>
       </Form>
     </CardWrapper>

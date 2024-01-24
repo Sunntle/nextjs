@@ -16,10 +16,10 @@ const resetPassword = async (
   try {
     const validatedFields = ForgotPasswordSchema.safeParse(values);
     if (!validatedFields.success)
-      return { status: "error", message: "Invalid email" };
+      return { status: "error", code: 102 };
     const { username } = validatedFields.data;
     const existingEmail = await getUserByEmail(username);
-    if (!existingEmail) return { status: "error", message: "Email not found" };
+    if (!existingEmail) return { status: "error", code: 113 };
     const dataToken = await generateVerifyToken(username, "reset-password");
     if (!dataToken)
       throw new Error("Something wrong with generate verify token");
@@ -29,10 +29,10 @@ const resetPassword = async (
       `http://localhost:3000/new-password`,
       "Click here to reset your password"
     );
-    return { message: "Reset email sent!", status: "ok" };
+    return { code: 205, status: "ok" };
   } catch (err) {
     console.log("Error", err);
-    return { message: "Something went wrong!", status: "error" };
+    return { code: 0, status: "error" };
   }
 };
 const newPassword = async (
@@ -42,15 +42,15 @@ const newPassword = async (
   try {
     const validatedFields = NewPasswordSchema.safeParse(values);
     if (!validatedFields.success)
-      return { status: "error", message: "Invalid password" };
+      return { status: "error", code: 111 };
     const existingToken = await verificaitionTokenByToken(token, "reset-password");
     if (!existingToken)
-      return { status: "error", message: "Token doesn't exist!" };
+      return { status: "error", code: 104 };
     const isExpired = new Date(existingToken.expires) < new Date();
-    if (isExpired) return { status: "error", message: "Token has expired!" };
+    if (isExpired) return { status: "error", code: 105 };
     const existingUser = await getUserByEmail(existingToken.email);
     if (!existingUser)
-      return { status: "error", message: "Email doesn't exist!" };
+      return { status: "error", code: 113 };
     const { password } = validatedFields.data;
     const hashedPassword = await bcrypt.hash(password, 10);
     await Promise.all([
@@ -60,10 +60,10 @@ const newPassword = async (
       }),
       deleteVerifyToken(existingToken.id)
     ]);
-    return { message: "Reset password successfully!", status: "ok" };
+    return { code:203, status: "ok" };
   } catch (err) {
     console.log("Error", err);
-    return { message: "Something went wrong!", status: "error" };
+    return { code: 0, status: "error" };
   }
 };
 export { resetPassword, newPassword };

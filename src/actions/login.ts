@@ -18,8 +18,9 @@ interface IResponseErrorServerAction {
   status: string;
 }
 interface IResponseError {
-  message: string;
+  message?: string;
   status: string;
+  code: number
 }
 const loginServerAction = async (
   currentState: IResponseErrorServerAction,
@@ -47,19 +48,19 @@ const loginAction = async (
 ): Promise<IResponseError> => {
   const validatedFields = LoginSchema.safeParse(values);
   if (!validatedFields.success) {
-    return { message: "Invalid fields", status: "error" };
+    return { code: 101, status: "error" };
   }
   try {
     const { username, password, code } = validatedFields.data;
     const isExistUser = await getUserByEmail(username);
     if (!isExistUser || !isExistUser.email || !isExistUser.password)
-      return { message: "Email doesn't exist!", status: "error" };
+      return { code: 102, status: "error" };
     if (!isExistUser.emailVerified) {
       const dataToken = await generateVerifyToken(username, "email-verify");
       if (!dataToken)
-        throw new Error("Something wrong with generate verify token");
+        throw new Error("Something wrong with generate verify-token");
       await sendVerificationEmail(dataToken.email, dataToken.token);
-      return { message: "Confirmation email sent!", status: "ok" };
+      return { code: 201, status: "ok" };
     }
     if (isExistUser.isTwoFactorEnabled) {
       if (code) {
@@ -68,9 +69,9 @@ const loginAction = async (
           "2fa"
         );
         if (!twoFactorToken || twoFactorToken.token !== code)
-          return { message: "Invalid code!", status: "error2fa" };
+          return { code: 104, status: "error2fa" };
         const isExpired = new Date(twoFactorToken.expires) < new Date();
-        if (isExpired) return { message: "Code expired!", status: "error" };
+        if (isExpired) return { code: 105, status: "error" };
         await Promise.all([
           deleteVerifyToken(twoFactorToken.id),
           db.twoFactorToken.create({ data: { userId: isExistUser.id } }),
@@ -87,7 +88,7 @@ const loginAction = async (
           );
           if (!twoFactorToken)
             return {
-              message: "Something went wrong with 2FA!",
+             code: 106,
               status: "error",
             };
           await sendVerificationEmail(
@@ -97,12 +98,12 @@ const loginAction = async (
             "Your 2FA code is",
             false
           );
-          return { status: "pending", message: "" };
+          return { status: "pending", message: "", code: 0 };
         }
 
         return {
           status: "error2fa",
-          message: "Please check your email to get a code!",
+          code: 301
         };
       }
     }
@@ -111,14 +112,14 @@ const loginAction = async (
       password,
       redirectTo: DEFAULT_LOGIN_REDIRECT,
     });
-    return { message: "Login successfully", status: "pending" };
+    return { code: 202, status: "pending" };
   } catch (err) {
     if (err instanceof AuthError) {
       switch (err.type) {
         case "CredentialsSignin":
-          return { message: "Invalid credentials!", status: "error" };
+          return { code: 107, status: "error" };
         default:
-          return { message: "Something went wrong!", status: "error" };
+          return { code: 0, status: "error" };
       }
     }
     throw err;
@@ -132,16 +133,16 @@ const loginActionWithSocial = async (
     await signIn(provider, {
       redirectTo: DEFAULT_LOGIN_REDIRECT,
     });
-    return { message: "Login successfully", status: "ok" };
+    return { code: 202, status: "ok" };
   } catch (err) {
     if (err instanceof AuthError) {
       switch (err.type) {
         case "OAuthSignInError":
-          return { message: "Invalid accounts!", status: "error" };
+          return { code: 108, status: "error" };
         case "OAuthAccountNotLinked":
-          return { message: "Account isn't linked!", status: "error" };
+          return { code: 109, status: "error" };
         default:
-          return { message: "Something went wrong!", status: "error" };
+          return { code: 0, status: "error" };
       }
     }
     throw err;
