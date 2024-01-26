@@ -44,7 +44,8 @@ const loginServerAction = async (
 };
 
 const loginAction = async (
-  values: z.infer<typeof LoginSchema>
+  values: z.infer<typeof LoginSchema>,
+  callbackUrl:string | null
 ): Promise<IResponseError> => {
   const validatedFields = LoginSchema.safeParse(values);
   if (!validatedFields.success) {
@@ -63,7 +64,8 @@ const loginAction = async (
       return { code: 201, status: "ok" };
     }
     if (isExistUser.isTwoFactorEnabled) {
-      if (code) {
+      if (code && code !== "0") {
+        if(isNaN(parseInt(code))) return { code: 104, status: "error2fa" };
         const twoFactorToken = await verificaitionTokenByEmail(
           isExistUser.email,
           "2fa"
@@ -81,16 +83,21 @@ const loginAction = async (
           isExistUser.email,
           "2fa"
         );
-        if (!isSentEmail || new Date(isSentEmail.expires) < new Date()) {
+  
+        if (code && code === "0" || !isSentEmail || new Date(isSentEmail.expires) < new Date()) {
           const twoFactorToken = await generateTwoFactorToken(
             isExistUser.email,
             "2fa"
           );
+          console.log("run", !twoFactorToken);
+          
           if (!twoFactorToken)
             return {
              code: 106,
               status: "error",
             };
+            console.log("pass");
+            
           await sendVerificationEmail(
             twoFactorToken.email,
             twoFactorToken.token,
@@ -98,6 +105,8 @@ const loginAction = async (
             "Your 2FA code is",
             false
           );
+          console.log("send email successfully");
+          
           return { status: "pending", message: "", code: 0 };
         }
 
@@ -110,6 +119,7 @@ const loginAction = async (
     await signIn("credentials", {
       username,
       password,
+      redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT
     });
     return { code: 202, status: "pending" };
   } catch (err) {

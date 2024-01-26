@@ -1,3 +1,4 @@
+"use client"
 import { BeatLoader } from "react-spinners";
 import CardWrapper from "./card-wrapper";
 import { useSearchParams } from "next/navigation";

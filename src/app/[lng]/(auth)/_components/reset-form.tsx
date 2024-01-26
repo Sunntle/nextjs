@@ -1,3 +1,4 @@
+"use client"
 import CardWrapper from "./card-wrapper";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";

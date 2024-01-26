@@ -33,9 +33,9 @@ const LoginForm = () => {
     code: 0,
     status: ""
   });
-  const {language} = useAppState()
-  const {t} = useTranslation(language)
+  const {t} = useTranslation()
   const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl")
   const errorText =
     searchParams.get("error") === "OAuthAccountNotLinked"
       ? t("auth.emailUsed")
@@ -50,16 +50,15 @@ const LoginForm = () => {
   });
 
   const handleSend2FA = (values?: z.infer<typeof LoginSchema>) =>{
-    const value = values ?? {...form.getValues(), code: ""};
+    const value = values ?? {...form.getValues(), code: "0"};
     startTransition(() => {
-      loginAction(value).then((data: IResponseError) => {
+      loginAction(value, callbackUrl).then((data: IResponseError) => {
         if(!data) return;
         data?.status === "error" && form.resetField("code")
         setSuccess(data);
       });
     });
   }
-
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     handleSend2FA(values)
   };
