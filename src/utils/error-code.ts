@@ -21,7 +21,8 @@ const errorCode = (code:number) => {
         case 204: return "email-verified"
         case 205: return "rspw-sent"
         case 301: return "check-email"
-        case 0: return ""
+        case 401: return "dn-have-permission"
+        case 0: return "error"
         default: return "error"
     }
 }

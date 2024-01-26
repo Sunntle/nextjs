@@ -3,7 +3,7 @@ export const publicRoutes:string[] = [
 ]
 
 export const privateRoutes:string[] = [
-    "/settings"
+    "/settings", "/admin"
 ]
 
 export const authRoutes:string[] = [

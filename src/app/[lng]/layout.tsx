@@ -3,15 +3,16 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { auth } from "@/auth";
 import { SessionProvider } from "next-auth/react";
-import { dir } from 'i18next'
-import { languages } from '@/i18n/setting'
+import { dir } from "i18next";
+import { languages } from "@/i18n/setting";
 import { Footer } from "@/components/ui/footer/page";
-import { useTranslation } from "@/i18n";
 import Navbar from "@/components/ui/navbar/page";
 import AppProvider from "@/contexts/AppContext";
+import Header from "@/components/ui/header/page";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export async function generateStaticParams() {
-  return languages.map((lng) => ({ lng }))
+  return languages.map((lng) => ({ lng }));
 }
 const inter = Inter({ subsets: ["vietnamese"] });
 
@@ -22,28 +23,30 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-  params: {
-    lng
-  }
+  params: { lng },
 }: {
-  children: React.ReactNode,
-  params:{lng: any}
+  children: React.ReactNode;
+  params: { lng: any };
 }) {
   const session = await auth();
-  const { t } = await useTranslation(lng);
   return (
-    <SessionProvider session={session}>
-      <html lang={lng} dir={dir(lng)}>
-      <AppProvider language={lng}>
-        <body className={inter.className} suppressHydrationWarning={true}>
-          <Navbar lng={lng}/>
-          {children}
-          <Footer lng={lng}/>
-        </body>
-        </AppProvider>
-      </html>
-    </SessionProvider>
+    <html lang={lng} dir={dir(lng)} suppressHydrationWarning>
+      <body className={inter.className} suppressHydrationWarning={true}>
+        <SessionProvider session={session}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <AppProvider language={lng}>
+              <Header />
+              {children}
+              <Footer lng={lng} />
+            </AppProvider>
+          </ThemeProvider>
+        </SessionProvider>
+      </body>
+    </html>
   );
 }
-
-

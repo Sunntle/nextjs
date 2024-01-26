@@ -20,7 +20,7 @@ export const TVChartContainer = () => {
   const defaultProps:Partial<ChartingLibraryWidgetOptions> = useMemo(()=>({
     symbol: "BTC/USD",
     interval: "D" as ResolutionString,
-    library_path: "/static/charting_library/",
+    library_path: "static/charting_library/",
     charts_storage_url: "https://saveload.tradingview.com",
     charts_storage_api_version: "1.1",
     client_id: "tradingview.com",

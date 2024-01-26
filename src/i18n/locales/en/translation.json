@@ -16,6 +16,8 @@
   },
   "auth": {
     "login": "Login",
+    "logout": "Log out",
+    "profile": "Profile",
     "register": "Register",
     "sigin": "Sign in",
     "signup": "Sign up",
@@ -59,7 +61,8 @@
     "email-verified": "Email verified!",
     "check-email": "Please check your email to get a code!",
     "rspw-sent": "Reset email sent!",
-    "error": "Something went wrong"
+    "error": "Something went wrong",
+    "dn-have-permission": "You do not have permission to view this content!"
   },
   "languageSwitcher": "Switch from <1>{{lng}}</1> to: "
 }

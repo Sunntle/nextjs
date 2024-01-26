@@ -110,7 +110,6 @@ const loginAction = async (
     await signIn("credentials", {
       username,
       password,
-      redirectTo: DEFAULT_LOGIN_REDIRECT,
     });
     return { code: 202, status: "pending" };
   } catch (err) {
@@ -148,5 +147,6 @@ const loginActionWithSocial = async (
     throw err;
   }
 };
+
 export { loginServerAction, loginAction, loginActionWithSocial };
 export type { IResponseError };

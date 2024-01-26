@@ -1,4 +1,5 @@
 "use client"
+import { useTranslation } from "@/i18n/client";
 import { createContext, useContext } from "react";
 
 type AppProviderProps = {

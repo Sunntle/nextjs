@@ -49,14 +49,19 @@ const LoginForm = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+  const handleSend2FA = (values?: z.infer<typeof LoginSchema>) =>{
+    const value = values ?? {...form.getValues(), code: ""};
     startTransition(() => {
-      loginAction(values).then((data: IResponseError) => {
+      loginAction(value).then((data: IResponseError) => {
         if(!data) return;
         data?.status === "error" && form.resetField("code")
         setSuccess(data);
       });
     });
+  }
+
+  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+    handleSend2FA(values)
   };
 
   return (
@@ -86,7 +91,7 @@ const LoginForm = () => {
                   <FormMessage />
                   <FormDescription className="text-sm">
                   {t("auth.2famailsent")}
-                    <Button variant="link" size="sm" onClick={() => {}}>
+                    <Button variant="link" type="button" size="sm" onClick={()=>handleSend2FA()}>
                     {t("auth.resend")}
                     </Button>
                   </FormDescription>

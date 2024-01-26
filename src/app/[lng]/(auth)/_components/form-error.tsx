@@ -4,7 +4,7 @@ interface FormProps {
 }
 const FormError = ({message}: FormProps) => {
     if(!message) return null;
-    return <div className="bg-destructive/15 p-3 rounded-md flex items-center gap-x-3 text-destructive text-sm">
+    return <div className="bg-destructive/15 p-3 rounded-md flex items-center gap-x-3text-destructive-foreground text-sm">
         <BsExclamationCircleFill className="h-4 w-4"/>
         {message}
     </div>;
