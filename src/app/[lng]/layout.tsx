@@ -39,7 +39,7 @@ export default async function RootLayout({
             disableTransitionOnChange
           >
             <AppProvider language={lng}>
-              <Header/>
+              <Header lng={lng}/>
               <div className="max-w-[1220px] m-auto">
               {children}
               </div>

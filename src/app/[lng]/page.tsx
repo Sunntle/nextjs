@@ -12,6 +12,7 @@ export default async function Home({ params: { lng } }: ICommonProps) {
           src="https://res.cloudinary.com/dw6jih4yt/image/upload/v1706436846/generated_public_links/hero_3x_w14phm.webp"
           sizes="100vw"
           fill
+          priority
           alt="Slide"
         />
       </div>

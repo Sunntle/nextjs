@@ -1,3 +1,4 @@
+"use client";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -7,10 +8,19 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+
 import { useTranslation } from "@/i18n/client";
 import Link from "next/link";
 import { useMemo } from "react";
-
+import { ModeToggle } from "./darkmode-button";
+import ModeSwitchLanguage from "./language-button";
+import { useBreakpoints } from "@/hooks/useBreakpoints";
+import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 const menuList = [
   {
     label: "markets",
@@ -44,6 +54,11 @@ const menuList = [
 ];
 const Navbar = () => {
   const { t } = useTranslation();
+  const breakpoints = useBreakpoints();
+  const isLargerLgScreen = useMemo(
+    () => breakpoints.isLg || breakpoints.isXL || breakpoints.isXXL,
+    [breakpoints]
+  );
   const renderList = useMemo(() => {
     return menuList.map((item, key) => (
       <NavigationMenuItem key={key}>
@@ -53,17 +68,13 @@ const Navbar = () => {
               {t(`navbar.${item.label}`)}
             </NavigationMenuTrigger>
             <NavigationMenuContent>
-              <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[600px]">
+              <ul className="grid gap-3 p-4 w-fit md:w-[400px] lg:w-[600px] max-[640px]:max-w-[160px] sm:max-w-[200px] md:max-w-[300px]">
                 <li className="w-full">
                   {item?.child?.map((el) => (
                     <NavigationMenuLink key={el.label + key}>
                       <p>{t(`navbar.${el.label}`)}</p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-muted-foreground max-[281px]:d-none">
                         Lorem ipsum, dolor sit amet consectetur adipisicing
-                        elit. Ex qui, aliquam vero et iusto expedita repudiandae
-                        praesentium! Illo ratione quod nulla aperiam
-                        voluptatibus tenetur, quis, deserunt, facilis ad ipsum
-                        vero.
                       </p>
                     </NavigationMenuLink>
                   ))}
@@ -76,16 +87,41 @@ const Navbar = () => {
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               {t(`navbar.${item.label}`)}
             </NavigationMenuLink>
-            
           </Link>
         )}
       </NavigationMenuItem>
     ));
   }, [t]);
+
+  if (!isLargerLgScreen)
+    return (
+      <>
+        <Popover>
+          <PopoverTrigger>
+            <HamburgerMenuIcon className="h-[1.2rem] w-[1.2rem]" />
+          </PopoverTrigger>
+          <PopoverContent sideOffset={18}>
+            <NavigationMenu orientation="vertical">
+              <NavigationMenuList className="flex-col items-start">
+                {renderList}
+              </NavigationMenuList>
+            </NavigationMenu>
+          </PopoverContent>
+        </Popover>
+      </>
+    );
   return (
-    <NavigationMenu>
-      <NavigationMenuList>{renderList}</NavigationMenuList>
-    </NavigationMenu>
+    <>
+      <NavigationMenu>
+        <NavigationMenuList>
+          {renderList}
+        </NavigationMenuList>
+      </NavigationMenu>
+      <div className="flex items-center gap-x-3">
+        <ModeToggle />
+        <ModeSwitchLanguage />
+      </div>
+    </>
   );
 };
 
