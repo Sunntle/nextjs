@@ -6,7 +6,6 @@ import { SessionProvider } from "next-auth/react";
 import { dir } from "i18next";
 import { languages } from "@/i18n/setting";
 import { Footer } from "@/components/ui/footer/page";
-import Navbar from "@/components/ui/navbar/page";
 import AppProvider from "@/contexts/AppContext";
 import Header from "@/components/ui/header/page";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -40,8 +39,10 @@ export default async function RootLayout({
             disableTransitionOnChange
           >
             <AppProvider language={lng}>
-              <Header />
+              <Header/>
+              <div className="max-w-[1220px] m-auto">
               {children}
+              </div>
               <Footer lng={lng} />
             </AppProvider>
           </ThemeProvider>

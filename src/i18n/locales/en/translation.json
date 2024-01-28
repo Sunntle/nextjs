@@ -1,7 +1,10 @@
 {
   "common": {
     "welcome": "Hi",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "english": "English",
+    "vietnamese": "Vietnamese",
+    "emailaddress": "Email address"
   },
   "navbar": {
     "markets": "Markets",
@@ -19,7 +22,7 @@
     "logout": "Log out",
     "profile": "Profile",
     "register": "Register",
-    "sigin": "Sign in",
+    "signin": "Sign in",
     "signup": "Sign up",
     "loginform": "Login Form",
     "registerform": "Register Form",
@@ -63,6 +66,10 @@
     "rspw-sent": "Reset email sent!",
     "error": "Something went wrong",
     "dn-have-permission": "You do not have permission to view this content!"
+  },
+  "home":{
+    "title": "The future of money is here",
+    "subTitle": "We're the most trusted place for people and businesses to buy, sell, and manage crypto."
   },
   "languageSwitcher": "Switch from <1>{{lng}}</1> to: "
 }

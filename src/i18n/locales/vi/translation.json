@@ -1,7 +1,10 @@
 {
   "common": {
     "welcome": "Xin chào",
-    "loading": "Đang tải..."
+    "loading": "Đang tải...",
+    "english": "Tiếng anh",
+    "vietnamese": "Tiếng việt",
+    "emailaddress": "Địa chỉ email"
   },
   "navbar": {
     "markets": "Thị trường",
@@ -19,7 +22,7 @@
     "logout": "Đăng xuất",
     "profile": "Thông tin tài khoản",
     "register": "Đăng ký",
-    "sigin": "Đăng nhập",
+    "signin": "Đăng nhập",
     "signup": "Đăng ký",
     "loginform": "Mẫu đăng nhập",
     "registerform": "Mẫu đăng ký",
@@ -63,6 +66,10 @@
     "rspw-sent": "Email đặt lại mật khẩu đã được gửi!",
     "error": "Đã xảy ra lỗi",
     "dn-have-permission": "Bạn không có quyền xem nội dung này!"
+  },
+  "home": {
+    "title": "Tương lai của đồng tiền là đây",
+    "subTitle": "Chúng tôi là nơi đáng tin cậy nhất để mọi người và doanh nghiệp mua, bán và quản lý tiền điện tử."
   },
   "languageSwitcher": "Chuyển từ <1>{{lng}}</1> ĐẾN: "
 }
