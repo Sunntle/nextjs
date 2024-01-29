@@ -7,6 +7,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
+  NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
 import {
   Popover,
@@ -68,7 +69,7 @@ const Navbar = () => {
               {t(`navbar.${item.label}`)}
             </NavigationMenuTrigger>
             <NavigationMenuContent>
-              <ul className="grid gap-3 p-4 w-fit md:w-[400px] lg:w-[600px] max-[640px]:max-w-[160px] sm:max-w-[200px] md:max-w-[300px]">
+              <ul className="grid gap-3 p-4 w-fit md:w-[400px] lg:w-[600px] max-[640px]:max-w-[160px] sm:max-w-[200px] md:max-w-[250px]">
                 <li className="w-full">
                   {item?.child?.map((el) => (
                     <NavigationMenuLink key={el.label + key}>
@@ -100,10 +101,14 @@ const Navbar = () => {
           <PopoverTrigger>
             <HamburgerMenuIcon className="h-[1.2rem] w-[1.2rem]" />
           </PopoverTrigger>
-          <PopoverContent sideOffset={18}>
+          <PopoverContent sideOffset={18} align="end">
             <NavigationMenu orientation="vertical">
               <NavigationMenuList className="flex-col items-start">
                 {renderList}
+                <div className="flex items-center px-2">
+                  <ModeToggle />
+                  <ModeSwitchLanguage />
+                </div>
               </NavigationMenuList>
             </NavigationMenu>
           </PopoverContent>
@@ -113,9 +118,7 @@ const Navbar = () => {
   return (
     <>
       <NavigationMenu>
-        <NavigationMenuList>
-          {renderList}
-        </NavigationMenuList>
+        <NavigationMenuList>{renderList}</NavigationMenuList>
       </NavigationMenu>
       <div className="flex items-center gap-x-3">
         <ModeToggle />

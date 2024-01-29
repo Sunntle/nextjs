@@ -16,7 +16,7 @@ const Header = async({lng} : {lng:string}) => {
 
   return (
     <header className="sticky py-2 top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="flex justify-around items-center ">
+      <div className="flex justify-between lg:justify-around items-center px-6">
         <Link href="/en/">Logo</Link>
         <div className="flex justify-between items-center gap-3 lg:gap-5">
             <Navbar />
