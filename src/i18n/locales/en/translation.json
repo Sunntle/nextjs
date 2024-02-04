@@ -5,7 +5,8 @@
     "english": "English",
     "vietnamese": "Vietnamese",
     "emailaddress": "Email address",
-    "title-to-signup": "Jump start your portfolio"
+    "title-to-signup": "Jump start your portfolio",
+    "last-updated": "Last updated"
   },
   "navbar": {
     "markets": "Markets",
@@ -27,7 +28,7 @@
     "signup": "Sign up",
     "loginform": "Login Form",
     "registerform": "Register Form",
-    "name": "name",
+    "name": "Name",
     "publicName": "This is your public display name.",
     "password": "Password",
     "forgotpw": "Forgot your password?",
@@ -70,7 +71,12 @@
   },
   "home":{
     "title": "The future of money is here",
-    "subTitle": "We're the most trusted place for people and businesses to buy, sell, and manage crypto."
+    "subTitle": "We're the most trusted place for people and businesses to buy, sell, and manage crypto.",
+    "title2": "Explore crypto like Bitcoin, Ethereum, and Dogecoin",
+    "subTitle2": "Simply and securely buy, sell, and manage hundreds of cryptocurrencies.",
+    "tradable": "Tradable",
+    "top": "Top Gainers",
+    "new": "New on ..."
   },
   "languageSwitcher": "Switch from <1>{{lng}}</1> to: "
 }

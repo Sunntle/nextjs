@@ -11,6 +11,7 @@ interface ISubscriptionItem {
 }
 const CRYPTO_COMPARE_API_KEY =`81ead87784ac9cc1e8450f923768be09afafc70c28725b4d59a4254fd7f5abeb`
 let ccStreamer: WebSocket | undefined;
+console.log(ccStreamer);
 
 if (!ccStreamer) {
   ccStreamer = new WebSocket(

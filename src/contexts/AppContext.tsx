@@ -1,15 +1,21 @@
 "use client"
-import { createContext, useContext } from "react";
+import { useBreakpoints } from "@/hooks/useBreakpoints";
+import { createContext, useContext, useMemo } from "react";
 
 type AppProviderProps = {
   children?: React.ReactNode;
   language: string;
 };
-const AppContext = createContext({language: "en"});
+const AppContext = createContext({language: "en", isMobile: false});
 
 const AppProvider = ({ children, language }: AppProviderProps) => {
+  const breakpoints = useBreakpoints();
+  const isMobile = useMemo(
+    () => breakpoints.isXs || breakpoints.isSm || breakpoints.isMd,
+    [breakpoints]
+  );
   return (
-    <AppContext.Provider value={{language }}>
+    <AppContext.Provider value={{language, isMobile }}>
     {children}
     </AppContext.Provider>
   );

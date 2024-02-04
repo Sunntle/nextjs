@@ -7,21 +7,20 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-  NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-
 import { useTranslation } from "@/i18n/client";
 import Link from "next/link";
 import { useMemo } from "react";
 import { ModeToggle } from "./darkmode-button";
 import ModeSwitchLanguage from "./language-button";
-import { useBreakpoints } from "@/hooks/useBreakpoints";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
+import { useAppState } from "@/contexts/AppContext";
+
 const menuList = [
   {
     label: "markets",
@@ -53,13 +52,11 @@ const menuList = [
     label: "event",
   },
 ];
-const Navbar = () => {
+interface NavbarProps {
+  isMobile: boolean
+}
+const Navbar = ({isMobile}: NavbarProps) => {
   const { t } = useTranslation();
-  const breakpoints = useBreakpoints();
-  const isLargerLgScreen = useMemo(
-    () => breakpoints.isLg || breakpoints.isXL || breakpoints.isXXL,
-    [breakpoints]
-  );
   const renderList = useMemo(() => {
     return menuList.map((item, key) => (
       <NavigationMenuItem key={key}>
@@ -69,7 +66,7 @@ const Navbar = () => {
               {t(`navbar.${item.label}`)}
             </NavigationMenuTrigger>
             <NavigationMenuContent>
-              <ul className="grid gap-3 p-4 w-fit md:w-[400px] lg:w-[600px] max-[640px]:max-w-[160px] sm:max-w-[200px] md:max-w-[250px]">
+              <ul className="grid gap-3 p-4 w-fit md:w-[400px] lg:w-[600px] max-[640px]:max-w-[160px] sm:max-w-[200px] md:max-w-[250px] ">
                 <li className="w-full">
                   {item?.child?.map((el) => (
                     <NavigationMenuLink key={el.label + key}>
@@ -94,7 +91,7 @@ const Navbar = () => {
     ));
   }, [t]);
 
-  if (!isLargerLgScreen)
+  if (isMobile)
     return (
       <>
         <Popover>
@@ -120,7 +117,7 @@ const Navbar = () => {
       <NavigationMenu>
         <NavigationMenuList>{renderList}</NavigationMenuList>
       </NavigationMenu>
-      <div className="flex items-center gap-x-3">
+      <div className="flex items-center gap-x-2">
         <ModeToggle />
         <ModeSwitchLanguage />
       </div>

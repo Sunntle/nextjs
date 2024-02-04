@@ -1,5 +1,6 @@
 import { Bar, ErrorCallback, HistoryCallback, LibrarySymbolInfo, PeriodParams, ResolutionString, ResolveCallback, SymbolInfoPriceSource, SymbolResolveExtension } from "charting_library";
-import { makeApiRequest, generateSymbol, parseFullSymbol } from "./helper";
+import {  generateSymbol, parseFullSymbol } from "./helper";
+import { makeApiRequest } from "@/lib/api";
 import { subscribeOnStream, unsubscribeFromStream } from "./streaming";
 
 export interface ISymbol {

@@ -33,6 +33,11 @@
     --ring: 222.2 84% 4.9%;
  
     --radius: 0.5rem;
+    --welcome-image: 
+    radial-gradient(at 0% 0%, rgb(242, 241, 245) 0, transparent 50%), 
+    radial-gradient(at 50% 0%, rgb(113, 130, 180) 0, transparent 50%), 
+    radial-gradient(at 100% 0%, rgb(179, 69, 107) 0, transparent 50%);
+    --welcome-color: #ffffff
   }
  
   .dark {
@@ -63,9 +68,17 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
+    --welcome-image: 
+    radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+    radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+    radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+    --welcome-color: #0f0e13
   }
 }
- 
+.bg-welcome-image{
+  background-image: var(--welcome-image);
+  background-color: var(--welcome-color)
+}
 @layer base {
   * {
     @apply border-border;

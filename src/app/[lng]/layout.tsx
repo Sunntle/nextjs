@@ -40,7 +40,7 @@ export default async function RootLayout({
           >
             <AppProvider language={lng}>
               <Header lng={lng}/>
-              <div className="max-w-[1220px] m-auto px-6 lg:p-0">
+              <div>
               {children}
               </div>
               <Footer lng={lng} />

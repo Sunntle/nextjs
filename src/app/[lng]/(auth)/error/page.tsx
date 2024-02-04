@@ -1,4 +1,4 @@
-import CardWrapper from "@/app/(auth)/_components/card-wrapper";
+import CardWrapper from "@/app/[lng]/(auth)/_components/card-wrapper";
 import { BsExclamationCircleFill } from "react-icons/bs";
 
 const ErrorPage = () => {

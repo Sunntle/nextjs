@@ -20,7 +20,7 @@ const ModeSwitchLanguage = () => {
         const splitPathname = pathname.split("/")
         splitPathname[1] = language
         const newURL = splitPathname.join("/")
-        route.replace(newURL)
+        route.replace(newURL, {scroll: false})
     }
     return  <DropdownMenu>
     <DropdownMenuTrigger asChild>

@@ -22,6 +22,8 @@ const errorCode = (code:number) => {
         case 205: return "rspw-sent"
         case 301: return "check-email"
         case 401: return "dn-have-permission"
+        case 402: return "error-api"
+        case 403: return "invalid-params"
         case 0: return "error"
         default: return "error"
     }
