@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
-import { CustomTabContent, Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TabsContent, Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import CardItem from "./card-items";
 import { TFunction } from "i18next";
-import {  INewToken, IToplist } from "@/types/types";
+import { INewToken, IToplist } from "@/types/types";
 import { getDataByAssetType, getToplist } from "@/lib/api";
 import CardSkeleton from "./card-skeleton";
 import moment from "moment";
@@ -12,22 +12,25 @@ interface SectionListProps {
   topList?: IToplist;
 }
 const SectionList = async ({ t, lng }: SectionListProps) => {
-  const [topListNewToken, topList, topSpotMoving]: [INewToken, IToplist, INewToken] =
-    await Promise.all([
-      getDataByAssetType({
-        page: 1,
-        page_size: 10,
-        sort_by: "CREATED_ON",
-        sort_direction: "DESC",
-      }),
-      getToplist(6),
-      getDataByAssetType({
-        page: 1,
-        page_size: 10,
-        sort_by: "SPOT_MOVING_24_HOUR_CHANGE_PERCENTAGE_USD",
-        sort_direction: "DESC",
-      })
-    ]);
+  const [topListNewToken, topList, topSpotMoving]: [
+    INewToken,
+    IToplist,
+    INewToken
+  ] = await Promise.all([
+    getDataByAssetType({
+      page: 1,
+      page_size: 10,
+      sort_by: "CREATED_ON",
+      sort_direction: "DESC",
+    }),
+    getToplist(6),
+    getDataByAssetType({
+      page: 1,
+      page_size: 10,
+      sort_by: "SPOT_MOVING_24_HOUR_CHANGE_PERCENTAGE_USD",
+      sort_direction: "DESC",
+    }),
+  ]);
 
   return (
     <section className="bg-welcome-image px-6 py-12 md:py-20 md:px-12">
@@ -52,12 +55,9 @@ const SectionList = async ({ t, lng }: SectionListProps) => {
             <TabsTrigger value="top">{t("home.top")}</TabsTrigger>
             <TabsTrigger value="new">{t("home.new")}</TabsTrigger>
           </TabsList>
-          <CustomTabContent
-            value="tradable"
-            className="grid w-full max-[380px]:grid-cols-1 gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-2 xl:grid-cols-3"
-          >
-            {topList.data ? (
-              topList.data.map((item, index) => {
+          <TabsContent value="tradable">
+            <div className="grid w-full max-[380px]:grid-cols-1 gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-2 xl:grid-cols-3">
+              {topList.data.map((item, index) => {
                 // const {DISPLAY: {"USD": {price}}, ...rest} = item
                 // if(lng == "vi") price
                 const {
@@ -81,14 +81,12 @@ const SectionList = async ({ t, lng }: SectionListProps) => {
                     type="TRADABLE"
                   />
                 );
-              })
-            ) : (
-              <CardSkeleton />
-            )}
-          </CustomTabContent>
-          <CustomTabContent value="top">
-          {topSpotMoving?.data ?
-              topSpotMoving?.data?.map((item, index) => {
+              })}
+            </div>
+          </TabsContent>
+          <TabsContent value="top">
+            <div className="grid w-full max-[380px]:grid-cols-1 gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-2 xl:grid-cols-3">
+              {topSpotMoving?.data?.map((item, index) => {
                 if (index > 5) return;
                 return (
                   <CardItem
@@ -97,20 +95,23 @@ const SectionList = async ({ t, lng }: SectionListProps) => {
                     item={{
                       img: item.LOGO_URL as string,
                       FullName: item.NAME as string,
-                      price: item.PRICE_USD as string,
+                      price: `$ ${Number.parseFloat(
+                        item.PRICE_USD as string
+                      ).toFixed(12)}`,
                       name: item.NAME as string,
-                      percent: `${t("common.last-updated")}: ${ moment(new Date(item.PRICE_USD_LAST_UPDATE_TS as number * 1000)).format("DD/MM/YYYY").toString()}` 
+                      percent: Number.parseFloat(
+                        item.SPOT_MOVING_24_HOUR_CHANGE_PERCENTAGE_USD as string
+                      ).toFixed(2),
                     }}
                     type="TOP"
                   />
                 );
-              }) : <CardSkeleton/>}
-          </CustomTabContent>
-          <CustomTabContent
-            value="new"
-          >
-            {topListNewToken?.data ?
-              topListNewToken?.data?.map((item, index) => {
+              })}
+            </div>
+          </TabsContent>
+          <TabsContent value="new">
+            <div className="grid w-full max-[380px]:grid-cols-1 gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-2 xl:grid-cols-3">
+              {topListNewToken?.data?.map((item, index) => {
                 if (index > 5) return;
                 return (
                   <CardItem
@@ -119,14 +120,19 @@ const SectionList = async ({ t, lng }: SectionListProps) => {
                     item={{
                       img: item.LOGO_URL as string,
                       FullName: item.NAME as string,
-                      price: moment(new Date(item.CREATED_ON as number * 1000)).format("hh:ss DD/MM/YYYY").toString(),
+                      price: moment(
+                        new Date((item.CREATED_ON as number) * 1000)
+                      )
+                        .format("hh:ss DD/MM/YYYY")
+                        .toString(),
                       name: item.NAME as string,
                     }}
                     type="NEW"
                   />
                 );
-              }) : <CardSkeleton/>}
-          </CustomTabContent>
+              })}
+            </div>
+          </TabsContent>
         </Tabs>
       </div>
     </section>

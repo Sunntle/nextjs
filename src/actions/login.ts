@@ -89,15 +89,11 @@ const loginAction = async (
             isExistUser.email,
             "2fa"
           );
-          console.log("run", !twoFactorToken);
-          
           if (!twoFactorToken)
             return {
              code: 106,
               status: "error",
             };
-            console.log("pass");
-            
           await sendVerificationEmail(
             twoFactorToken.email,
             twoFactorToken.token,
@@ -105,8 +101,6 @@ const loginAction = async (
             "Your 2FA code is",
             false
           );
-          console.log("send email successfully");
-          
           return { status: "pending", message: "", code: 0 };
         }
 

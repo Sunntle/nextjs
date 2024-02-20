@@ -4,14 +4,13 @@ import {
   DEFAULT_LOGIN_REDIRECT,
   apiAuthRoute,
   authRoutes,
-  publicRoutes,
   privateRoutes,
 } from "@/route";
 import { NextResponse } from "next/server";
 import acceptLanguage from "accept-language";
 import { fallbackLng, languages, cookieName } from "@/i18n/setting";
 acceptLanguage.languages(languages);
-const STATIC_FILE = "a"
+
 export const { auth } = NextAuth(authConfig);
 export const config = {
   // ... other properties
@@ -35,7 +34,9 @@ export default auth((req) => {
   const sliceLanguage = "/"+nextUrl.pathname.split("/")?.[2]
   const isPrivateRoutes = privateRoutes.includes(sliceLanguage);
   const isAuthRoutes = authRoutes.includes(sliceLanguage);
+
   if (isApiAuthRoute) return null;
+  
   if (isAuthRoutes && isLoggedIn)
     return NextResponse.redirect(
       new URL(`/${lng}${DEFAULT_LOGIN_REDIRECT}`, nextUrl)

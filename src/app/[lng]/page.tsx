@@ -24,6 +24,7 @@ export default async function Home({ params: { lng } }: ICommonProps) {
             priority
             objectFit="contain"
             alt="Slide"
+            style={{filter: "drop-shadow(2px 2px 10px #706c6e)"}}
           />
         </div>
         <Button asChild variant="link" className="block md:hidden p-0">
@@ -46,7 +47,7 @@ export default async function Home({ params: { lng } }: ICommonProps) {
             </h3>
             <div className="flex w-full max-w-md items-center space-x-2">
               <Input type="email" placeholder="example@ex.com" />
-              <Button type="submit">Subscribe</Button>
+              <Button type="submit">{t("common.subscribe")}</Button>
             </div>
           </div>
         </div>

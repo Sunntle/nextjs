@@ -6,7 +6,11 @@
     "vietnamese": "Tiếng việt",
     "emailaddress": "Địa chỉ email",
     "title-to-signup": "Bắt đầu danh mục đầu tư của bạn",
-    "last-updated": "Lần cập nhật cuối cùng"
+    "last-updated": "Lần cập nhật cuối cùng",
+    "subscribe": "Đăng ký",
+    "dark": "Tối",
+    "light": "Sáng",
+    "system": "Hệ thống"
   },
   "navbar": {
     "markets": "Thị trường",

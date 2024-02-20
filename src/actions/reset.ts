@@ -26,7 +26,7 @@ const resetPassword = async (
     await sendVerificationEmail(
       dataToken.email,
       dataToken.token,
-      `http://localhost:3000/new-password`,
+      `http://localhost:3000/en/new-password`,
       "Click here to reset your password"
     );
     return { code: 205, status: "ok" };

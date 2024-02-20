@@ -52,18 +52,4 @@ const TabsContent = React.forwardRef<
 ))
 TabsContent.displayName = TabsPrimitive.Content.displayName
 
-const CustomTabContent = React.forwardRef<
-React.ElementRef<typeof TabsPrimitive.Content>,
-React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
->(({ className, ...props }, ref) => (
-<TabsPrimitive.Content
-  ref={ref}
-  className={cn(
-    "mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 grid w-full max-[380px]:grid-cols-1 gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-2 xl:grid-cols-3",
-    className
-  )}
-  {...props}
-/>
-))
-CustomTabContent.displayName = TabsPrimitive.Content.displayName
-export { Tabs, TabsList, TabsTrigger, TabsContent, CustomTabContent }
+export { Tabs, TabsList, TabsTrigger, TabsContent }

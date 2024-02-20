@@ -6,7 +6,11 @@
     "vietnamese": "Vietnamese",
     "emailaddress": "Email address",
     "title-to-signup": "Jump start your portfolio",
-    "last-updated": "Last updated"
+    "last-updated": "Last updated",
+    "subscribe": "Subscribe",
+    "dark": "Dark",
+    "light": "Light",
+    "system": "System"
   },
   "navbar": {
     "markets": "Markets",

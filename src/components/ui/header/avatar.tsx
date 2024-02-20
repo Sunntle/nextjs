@@ -12,14 +12,14 @@ import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { defaultAvt } from "@/utils/constant";
 import { getFallBackName } from "@/utils/helper";
 import {  useMemo } from "react";
-interface AvatarProps {
-  logOut: () => void,
-  children?: React.ReactNode
-}
+import { logOut } from "@/actions/logout";
 
-function AvatarComponent({logOut}:AvatarProps) {
+function AvatarComponent() {
     const {t} = useTranslation()
     const user = useCurrentUser()
+    const handleSignOut = async() =>{
+      await logOut()
+    }
     const fallbackName = useMemo(()=>getFallBackName(user.name),[user.name])
   return (
     <DropdownMenu>
@@ -33,7 +33,7 @@ function AvatarComponent({logOut}:AvatarProps) {
       <DropdownMenuItem >
         {t("auth.profile")}
       </DropdownMenuItem>
-      <DropdownMenuItem onClick={logOut}>
+      <DropdownMenuItem onClick={handleSignOut}>
       {t("auth.logout")}
       </DropdownMenuItem>
     </DropdownMenuContent>

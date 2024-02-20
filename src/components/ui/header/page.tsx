@@ -13,9 +13,6 @@ const Header = async({lng} : {lng:string}) => {
   const { t } = await useTranslation(lng);
   const detectDevice = headers().get("user-agent")
   const { isMobile } = getSelectorsByUserAgent(detectDevice ?? "")
-  const handleLogout = () => {
-    logOut();
-  };
   return (
     <header className="sticky py-2 top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="flex justify-between lg:justify-around items-center px-6">
@@ -23,7 +20,7 @@ const Header = async({lng} : {lng:string}) => {
         <div className="flex justify-between items-center gap-3 lg:gap-5">
             <Navbar isMobile={isMobile}/>
             {user ? (
-                <AvatarComponent logOut={handleLogout} />
+                <AvatarComponent />
               ) : (
                 <div className="flex items-center gap-x-2">
                   <Button variant="outline" asChild><Link href="/register" locale={lng}>{t("auth.signin")}</Link></Button>

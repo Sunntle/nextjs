@@ -3,7 +3,7 @@ import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const sendVerificationEmail = async (email:string, token: string, link: string = `http://localhost:3000/active-mail`, label: string = `Click here to verify your email`, isBackLinkEnable=true) => {
+const sendVerificationEmail = async (email:string, token: string, link: string = `http://localhost:3000/en/active-mail`, label: string = `Click here to verify your email`, isBackLinkEnable=true) => {
     try {
       const confirmLink = isBackLinkEnable ? `<a href="${link}?token=${token}">${label}</a>` : `<p>${label}: ${token}</p>`
         const data = await resend.emails.send({
